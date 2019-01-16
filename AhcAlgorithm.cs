@@ -27,7 +27,7 @@ namespace Clustering
         private DataMatrix _tempDistanceMatrix;
 
         private int[] _permutation = new int[0];
-        private Node[] _nodeArray = new Node[0];
+        private BinaryTreeNode[] _nodeArray = new BinaryTreeNode[0];
         private int _nodeIdx = 0;
 
 
@@ -89,7 +89,7 @@ namespace Clustering
         /// Gets the root node of the binary tree after the 
         /// AHC algorithm was executed on the data
         /// </summary>
-        public Node Tree
+        public BinaryTreeNode Tree
         {
             get
             {
@@ -320,13 +320,13 @@ namespace Clustering
         /// </summary>
         /// <param name="distanceMatrix">distance matrix of the original elements</param>
         /// <returns>array with length equal to the number of elements</returns>
-        private Node[] CreateLeafNodeArray(DataMatrix distanceMatrix)
+        private BinaryTreeNode[] CreateLeafNodeArray(DataMatrix distanceMatrix)
         {
             int elementCount = distanceMatrix.Data.GetLength(0);
-            Node[] newNodeArray = new Node[elementCount];
+            BinaryTreeNode[] newNodeArray = new BinaryTreeNode[elementCount];
 
             for (int i = 0; i < elementCount; i++)
-                newNodeArray[i] = new Node(_nodeIdx++, _rawData.ElementNames[i]);
+                newNodeArray[i] = new BinaryTreeNode(_nodeIdx++, _rawData.ElementNames[i]);
 
             return newNodeArray;
         }
@@ -339,12 +339,12 @@ namespace Clustering
         /// <param name="c2">index of the second cluster that was merged</param>
         /// <param name="d">distance between the clusters that were merged</param>
         /// <returns>array with length equal to the current number of clusters</returns>
-        private Node[] UpdateNodeArray(DataMatrix distanceMatrix, int c1, int c2, double d)
+        private BinaryTreeNode[] UpdateNodeArray(DataMatrix distanceMatrix, int c1, int c2, double d)
         {
             int clusterCount = distanceMatrix.Data.GetLength(0);
-            Node[] newNodeArray = new Node[clusterCount];
+            BinaryTreeNode[] newNodeArray = new BinaryTreeNode[clusterCount];
 
-            newNodeArray[0] = new Node(_nodeIdx++, _nodeArray[c1], _nodeArray[c2], d);
+            newNodeArray[0] = new BinaryTreeNode(_nodeIdx++, _nodeArray[c1], _nodeArray[c2], d);
 
             int n = 1;
 
@@ -380,7 +380,7 @@ namespace Clustering
         /// <summary>
         /// Fills the permutation array iteratively
         /// </summary>
-        private void FillPermutationArray(int[] permuationArray, ref int i, Node node)
+        private void FillPermutationArray(int[] permuationArray, ref int i, BinaryTreeNode node)
         {
             if (node.IsLeaf)
             {
@@ -429,7 +429,7 @@ namespace Clustering
         /// <summary>
         /// Iteratively flips the nodes of the tree and checks for the optimum distance
         /// </summary>
-        private double GetOptimalOrdering(Node node, DataMatrix distanceMatrix)
+        private double GetOptimalOrdering(BinaryTreeNode node, DataMatrix distanceMatrix)
         {
             if (node.LeafCount == 1)
                 return 0;
