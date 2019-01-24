@@ -20,8 +20,8 @@ namespace Clustering
         /// </summary>
         public DataMatrix(int n, int m)
         {
-            _elementNames = Enumerable.Range(1, n).Select(i => "E" + i.ToString()).ToArray();
-            _featureNames = Enumerable.Range(1, m).Select(i => "F" + i.ToString()).ToArray();
+            _elementNames = Enumerable.Range(1, n).Select(i => "E" + i).ToArray();
+            _featureNames = Enumerable.Range(1, m).Select(i => "F" + i).ToArray();
 
             _data = new double[n, m];
         }
